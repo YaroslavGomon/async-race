@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const devServer = isDev =>
   !isDev
@@ -12,12 +13,15 @@ const devServer = isDev =>
           open: true,
           hot: true,
           port: 8080,
-          watchFiles: ["src/**/*"],
+          watchFiles: ['src/**/*'],
           static: {
             directory: path.join(__dirname, 'public'),
           },
         },
       };
+
+const esLintPlugin = isDev =>
+  isDev ? [] : [new ESLintPlugin({ extensions: ['ts', 'js'] })];
 
 module.exports = ({ develop }) => ({
   mode: develop ? 'development' : 'production',
@@ -59,6 +63,7 @@ module.exports = ({ develop }) => ({
     assetModuleFilename: 'assets/[hash][ext]',
   },
   plugins: [
+    ...esLintPlugin(develop),
     new HtmlWebpackPlugin({
       // title: 'Demo webpack',
       template: './src/index.html',

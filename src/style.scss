@@ -2,4 +2,18 @@ $bodyColor: #ccc;
 
 body {
   background-color: $bodyColor;
+  background-image: url(./assets/dice5.png);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 80px;
+  color: red;
+}
+
+.image {
+  display: block;
+  transform: scale(.5);
+  margin: 10vh auto 0;
 }
